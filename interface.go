@@ -1,32 +1,5 @@
 package gorating
 
-type ResultType int64
-
-const (
-	Success ResultType = iota
-	Failure
-	Anulled
-	Forfeit
-)
-
-// A game result.
-type Result interface {
-	Score() float64
-	Type() ResultType
-}
-
-// Representation of the Game
-type Game interface {
-	// ID of player two.
-	PlayerOneId() string
-
-	// ID of player one.
-	PlayerTwoId() string
-
-	// The result of the game.
-	Result() Result
-}
-
 // Representation of the Tournament
 type Tournament interface {
 	// Return Tournament games.
