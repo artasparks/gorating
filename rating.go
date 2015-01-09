@@ -1,5 +1,14 @@
 package gorating
 
+// Representation of a rating
+type Rating interface {
+	// Get the current rating
+	Rating() float64
+
+	// Get the Player's variance
+	Variance() float64
+}
+
 const (
 	DefaultRat = 1500.0 // Default starting rating
 	DefaultDev = 350.0  // Default starting deviation
@@ -29,4 +38,8 @@ func DefaultBaseRating() *BaseRating {
 
 func (r *BaseRating) Rating() float64 {
 	return r.rating
+}
+
+func (r *BaseRating) Variance() float64 {
+	return r.deviation
 }

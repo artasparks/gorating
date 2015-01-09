@@ -1,23 +1,5 @@
 package gorating
 
-// Representation of the Rating
-type Rating interface {
-	// Get the current rating
-	Rating() float64
-
-	// Get the Player's variance
-	Variance() float64
-}
-
-// Representation of the Player
-type Player interface {
-	// The Player's ID.
-	Id() string
-
-	// Return the player's rating.
-	Rating() Rating
-}
-
 type ResultType int64
 
 const (
