@@ -6,17 +6,17 @@ type Tournament interface {
 	Games() []Game
 
 	// Get the games for a particular Player
-	GamesForPlayer(Player) []Game
+	GamesForPlayer(CompareablePlayer) []Game
 
 	// Return the players who played in the tournament.
-	Players() []Player
+	Players() []CompareablePlayer
 }
 
 // A system for rating a player
 type RatingSystem interface {
 	// Rate a player, who played in a tournament.
-	RateFromTournament(Player, Tournament) Rating
+	RateFromTournament(CompareablePlayer, Tournament) Rating
 
 	// Rate a player, who played in a game.
-	RateFromGame(Player, Game) Rating
+	RateFromGame(CompareablePlayer, Game) Rating
 }

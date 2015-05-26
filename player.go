@@ -1,33 +1,42 @@
 package gorating
 
-// Representation of the Player. ID is meant to be unique
-type Player interface {
-	// A unique identifier for the Player.
+// Necessary methods so that we can compare players.
+//
+// CompareablePlayer instances must implement
+// - UniqueId: A method to retrieve a unique ID.
+// - Rating: A way to get the current player's rating
+type CompareablePlayer interface {
+	// Gets the unique identifier for the player.
 	UnqiueId() string
 
-	// Return the player's rating.
+	// Returns the player's rating.
 	PlayerRating() Rating
 }
 
+// A basic player instance. Most practical systems will want to use more complex
+// players. However, this can be useful for scripts. or for tests.
 type BasePlayer struct {
 	// ID of the player.
-	Identifier string
+	Id string
 
 	// Rating of the player.
-	Rate Rating
+	R Rating
 }
 
-func DefaultBasePlayer(id string) *BasePlayer {
+// Creates a new base player.
+func NewBasePlayer(id string) *BasePlayer {
 	return &BasePlayer{
 		id,
 		DefaultBaseRating(),
 	}
 }
 
+// Get the UnqiueId, to make this a CompareablePlayer.
 func (t *BasePlayer) UnqiueId() string {
-	return t.Identifier
+	return t.Id
 }
 
+// Get the PlayerRating, to make this a CompareablePlayer.
 func (t *BasePlayer) PlayerRating() Rating {
-	return t.Rate
+	return t.R
 }

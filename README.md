@@ -1,5 +1,3 @@
-## A Rating system for the Go language
+## GoRating
 
-```
-  func
-```
+A rating system implemented in the language Go.

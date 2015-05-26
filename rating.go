@@ -1,6 +1,6 @@
 package gorating
 
-// Representation of a rating
+// Representation of a rating.
 type Rating interface {
 	// Get the current rating
 	Rating() float64
@@ -15,7 +15,7 @@ const (
 	DefaultVol = 0.06   // Default starting volatility
 )
 
-// A default rating struct
+// A default rating struct.
 type BaseRating struct {
 	// Rating Number
 	rating float64

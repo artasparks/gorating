@@ -6,7 +6,7 @@ import (
 
 func TestRating(t *testing.T) {
 	// t.Errorf("Test Failed")
-	var r Player = DefaultBasePlayer("zed")
+	var r CompareablePlayer = NewBasePlayer("zed")
 	if r == nil {
 		t.Errorf("Test Failed: nil")
 	}
