@@ -3,52 +3,60 @@
 //
 package simple
 
-////////////////////
-// Example Player //
-////////////////////
+import "github.com/Kashomon/gorating"
 
 // A simple player instance. Most practical systems will want to use more complex
 // players. However, this can be useful for scripts. or for tests.
 type SimplePlayer struct {
 	// ID of the player.
-	Id string
+	id string
 
 	// Rating of the player.
-	R Rating
-}
-
-// Creates a new base player.
-func NewBasePlayer(id string) *BasePlayer {
-	return &BasePlayer{
-		id,
-		DefaultBaseRating(),
-	}
+	score float64
 }
 
 // Get the UnqiueId, to make this a CompareablePlayer.
-func (t *BasePlayer) UnqiueId() string {
-	return t.Id
+func (t *SimplePlayer) UnqiueId() string {
+	return t.id
 }
 
 // Get the PlayerRating, to make this a CompareablePlayer.
-func (t *BasePlayer) PlayerRating() Rating {
-	return t.R
-}
-
-////////////////////////////
-// Example implementation //
-////////////////////////////
-
-// A simple rating example
-type SimpleRating struct {
-	score float64
-	prov  bool
-}
-
-func (t *SimpleRating) NumericScore() float64 {
+func (t *SimplePlayer) NumericScore() float64 {
 	return t.score
 }
 
-func (t *SimpleRating) IsProvisional() bool {
-	return t.prov
+// Ensure that the Simple player satisfies the Player interface
+var _ gorating.Player = &SimplePlayer{}
+
+type SimpleGame struct {
+	p1     *SimplePlayer
+	p2     *SimplePlayer
+	result float64
 }
+
+func (t *SimpleGame) PlayerOne() gorating.Player {
+	return gorating.Player(t.p1)
+}
+
+func (t *SimpleGame) PlayerTwo() gorating.Player {
+	return gorating.Player(t.p2)
+}
+
+func (t *SimpleGame) GameResult() float64 {
+	return t.result
+}
+
+var _ gorating.Game = &SimpleGame{}
+
+type SimpleRatingSystem struct {
+}
+
+func (t *SimpleRatingSystem) AllPlayersForEvent([]gorating.Game) []gorating.Player {
+	return []gorating.Player{}
+}
+
+func (t *SimpleRatingSystem) PlayerForEvent(gorating.Player, []gorating.Game) gorating.Player {
+	return gorating.Player(&SimplePlayer{})
+}
+
+var _ gorating.RatingSystem = &SimpleRatingSystem{}

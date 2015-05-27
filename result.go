@@ -39,29 +39,21 @@ const (
 	Anulled
 )
 
-// A game result, I.e., two players and the result of a game (numerical score).
-//
-//	Typically this is a numeric score from 0 to 1. However, the actual
-//	interpretation of the score is not specified here. Various rating systems
-//	are free to use there own result metric. Note that this is always from the
-//	perspective of a single player.
-type Result float64
-
 // Convert a ResultType to a Result.
-func ResultTypeToResult(r ResultType) Result {
+func ResultForResultType(r ResultType) float64 {
 	switch r {
 	case Win:
 	case ForfeitWin:
-		return Result(1.0)
+		return 1.0
 	case ForfeitLoss:
 	case Loss:
-		return Result(0.0)
+		return 0.0
 	case Anulled:
 	case Draw:
-		return Result(0.5)
+		return 0.5
 	case Partial:
 	default:
-		return Result(0.5)
+		return 0.5
 	}
-	return Result(0.5)
+	return 0.5
 }

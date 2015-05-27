@@ -2,18 +2,16 @@
 // games.
 package gorating
 
-// Representation of a rating.
+// Ratable interface.
 //
 // Most rating systems have various supporting values such as variance,
 // deviation, and other such values.
-type Rating interface {
-	// Gets the current rating, as a numeric rating.
+type Ratable interface {
+	// Gets the current rating, as a numeric rating. This will have wildly
+	// different interpretations based on the various scoring systems, but
+	// generally, all rating systems return some sort of number at the end of the
+	// day.
 	NumericScore() float64
-}
-
-type CalculatedRating interface {
-	RatingResult() Rating
-	PlayerId() string
 }
 
 // Necessary methods so that we can compare players.
@@ -21,12 +19,12 @@ type CalculatedRating interface {
 // CompareablePlayer instances must implement
 // - UniqueId: A method to retrieve a unique ID.
 // - Rating: A way to get the current player's rating
-type CompareablePlayer interface {
+type Player interface {
 	// Gets the unique identifier for the player.
 	UnqiueId() string
 
-	// Returns the player's rating.
-	PlayerRating() Rating
+	// Satisfies the Ratabe interface
+	Ratable
 }
 
 // An instance of a Game. Two 'players' and the result of their game.
@@ -39,31 +37,33 @@ type CompareablePlayer interface {
 type Game interface {
 	// Retrieves the first player. The result should be from the perspective of
 	// this player.
-	PlayerOne() CompareablePlayer
+	PlayerOne() Player
 
 	// Retrieves the second player.
-	PlayerTwo() CompareablePlayer
+	PlayerTwo() Player
 
-	// Retrieves the game result.
-	GameResult() Result
+	// A game result that indicates what happ
+	//
+	// Typically this is a numeric score from 0 to 1. However, the actual
+	// interpretation of the score is not specified here. Various rating systems
+	// are free to use there own result metric. Note that this is always from the
+	// perspective of a the first player.
+	GameResult() float64
 }
 
 // A system for rating a player. The Rating System interface is the
 // goal for the rating systems defined in the subdirectories.
 type RatingSystem interface {
 	// Rate all the players who played in a tournament.
-	AllPlayersForEvent([]Game) []CalculatedRating
+	//
+	// Note that rating a single game (instant rating) is a special case.
+	AllPlayersForEvent([]Game) []Player
 
 	// Rate only a single player who played in a tournament.
 	//
-	// Returns nil if the player is not specified in the relevant games.
-	PlayerForEvent(CompareablePlayer, []Game) CalculatedRating
-
-	// Rate two players who played a single game.
-	BothPlayersInstant(Game) []CalculatedRating
-
-	// Rate two players who played a single game.
+	// As with the above, if you need to rate a single game, just pass in a single
+	// game.
 	//
-	// Returns nil if the player is not specified in the game.
-	PlayerInstant(CompareablePlayer, Game) CalculatedRating
+	// Returns nil if the player is not specified in the relevant games.
+	PlayerForEvent(Player, []Game) Player
 }
