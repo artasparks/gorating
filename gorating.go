@@ -2,6 +2,12 @@
 // games.
 package gorating
 
+// A player.  All that we care about is that the player has a unique ID.
+type Player interface {
+	// Gets the player's un
+	UnqiueId() string
+}
+
 // Ratable interface.
 //
 // Most rating systems have various supporting values such as variance,
@@ -16,14 +22,11 @@ type Ratable interface {
 
 // Necessary methods so that we can compare players.
 //
-// CompareablePlayer instances must implement
+// RatablePlayer instances must implement
 // - UniqueId: A method to retrieve a unique ID.
 // - Rating: A way to get the current player's rating
-type Player interface {
-	// Gets the unique identifier for the player.
-	UnqiueId() string
-
-	// Satisfies the Ratabe interface
+type PlayerRating interface {
+	Player
 	Ratable
 }
 
@@ -37,10 +40,10 @@ type Player interface {
 type Game interface {
 	// Retrieves the first player. The result should be from the perspective of
 	// this player.
-	PlayerOne() Player
+	PlayerOne() PlayerRating
 
 	// Retrieves the second player.
-	PlayerTwo() Player
+	PlayerTwo() PlayerRating
 
 	// A game result that indicates what happ
 	//
@@ -51,13 +54,16 @@ type Game interface {
 	GameResult() float64
 }
 
-// A system for rating a player. The Rating System interface is the
+// A system for raing a player. The Rating System interface is the
 // goal for the rating systems defined in the subdirectories.
+//
+// It is assumed the the rating system has been constructed so that it knows
+// about all the games played.
 type RatingSystem interface {
 	// Rate all the players who played in a tournament.
 	//
 	// Note that rating a single game (instant rating) is a special case.
-	AllPlayersForEvent([]Game) []Player
+	AllPlayers([]Game) []PlayerRating
 
 	// Rate only a single player who played in a tournament.
 	//
@@ -65,5 +71,5 @@ type RatingSystem interface {
 	// game.
 	//
 	// Returns nil if the player is not specified in the relevant games.
-	PlayerForEvent(Player, []Game) Player
+	Player(Player, []Game) PlayerRating
 }

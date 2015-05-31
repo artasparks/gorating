@@ -7,7 +7,7 @@ import "github.com/Kashomon/gorating"
 
 // A simple player instance. Most practical systems will want to use more complex
 // players. However, this can be useful for scripts. or for tests.
-type SimplePlayer struct {
+type Player struct {
 	// ID of the player.
 	id string
 
@@ -16,47 +16,47 @@ type SimplePlayer struct {
 }
 
 // Get the UnqiueId, to make this a CompareablePlayer.
-func (t *SimplePlayer) UnqiueId() string {
+func (t *Player) UnqiueId() string {
 	return t.id
 }
 
 // Get the PlayerRating, to make this a CompareablePlayer.
-func (t *SimplePlayer) NumericScore() float64 {
+func (t *Player) NumericScore() float64 {
 	return t.score
 }
 
 // Ensure that the Simple player satisfies the Player interface
-var _ gorating.Player = &SimplePlayer{}
+var _ gorating.Player = &Player{}
 
-type SimpleGame struct {
-	p1     *SimplePlayer
-	p2     *SimplePlayer
+type Game struct {
+	p1     *Player
+	p2     *Player
 	result float64
 }
 
-func (t *SimpleGame) PlayerOne() gorating.Player {
+func (t *Game) PlayerOne() gorating.Player {
 	return gorating.Player(t.p1)
 }
 
-func (t *SimpleGame) PlayerTwo() gorating.Player {
+func (t *Game) PlayerTwo() gorating.Player {
 	return gorating.Player(t.p2)
 }
 
-func (t *SimpleGame) GameResult() float64 {
+func (t *Game) GameResult() float64 {
 	return t.result
 }
 
-var _ gorating.Game = &SimpleGame{}
+var _ gorating.Game = &Game{}
 
 type SimpleRatingSystem struct {
 }
 
-func (t *SimpleRatingSystem) AllPlayersForEvent([]gorating.Game) []gorating.Player {
-	return []gorating.Player{}
+func (t *SimpleRatingSystem) AllPlayersForEvent([]gorating.Game) []*gorating.CalcRating {
+	return []*gorating.CalcRating{}
 }
 
-func (t *SimpleRatingSystem) PlayerForEvent(gorating.Player, []gorating.Game) gorating.Player {
-	return gorating.Player(&SimplePlayer{})
+func (t *SimpleRatingSystem) PlayerForEvent(gorating.Player, []gorating.Game) *gorating.CalcRating {
+	return &gorating.CalcRating{}
 }
 
 var _ gorating.RatingSystem = &SimpleRatingSystem{}
