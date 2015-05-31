@@ -27,7 +27,7 @@ type Ratable interface {
 // - Rating: A way to get the current player's rating
 type PlayerRating interface {
 	Player
-	Ratable
+	Rating() Ratable
 }
 
 // An instance of a Game. Two 'players' and the result of their game.
@@ -71,5 +71,5 @@ type RatingSystem interface {
 	// game.
 	//
 	// Returns nil if the player is not specified in the relevant games.
-	Rate(Player, []Game) (PlayerRating, error)
+	Rate(PlayerRating, []Game) (PlayerRating, error)
 }

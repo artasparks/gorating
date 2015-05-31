@@ -31,7 +31,7 @@ func (t *UscfSystem) RateAll(games []gr.Game) ([]gr.PlayerRating, error) {
 	return nil, nil
 }
 
-func (t *UscfSystem) Rate(player gr.Player, games []gr.Game) (gr.PlayerRating, error) {
+func (t *UscfSystem) Rate(player gr.PlayerRating, games []gr.Game) (gr.PlayerRating, error) {
 	t.pmap = gr.PlayerMap(games)
 
 	_, ok := t.pmap[player.UnqiueId()]

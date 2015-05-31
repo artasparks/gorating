@@ -6,6 +6,16 @@ package simple
 
 import "github.com/Kashomon/gorating"
 
+type Rating struct {
+	score float64
+}
+
+func (s *Rating) NumericScore() float64 {
+	return s.score
+}
+
+var _ gorating.Ratable = &Rating{}
+
 // A simple player instance. Most practical systems will want to use more complex
 // players. However, this can be useful for scripts. or for tests.
 type Player struct {
@@ -13,7 +23,7 @@ type Player struct {
 	id string
 
 	// Rating of the player.
-	score float64
+	score *Rating
 }
 
 // Get the UnqiueId, to make this a CompareablePlayer.
@@ -22,8 +32,8 @@ func (t *Player) UnqiueId() string {
 }
 
 // Get the PlayerRating, to make this a CompareablePlayer.
-func (t *Player) NumericScore() float64 {
-	return t.score
+func (t *Player) Rating() gorating.Ratable {
+	return gorating.Ratable(t.score)
 }
 
 // Ensure that the Simple player satisfies the Player interface
@@ -56,7 +66,7 @@ func (t *SimpleRatingSystem) RateAll([]gorating.Game) ([]gorating.PlayerRating, 
 	return nil, nil
 }
 
-func (t *SimpleRatingSystem) Rate(gorating.Player, []gorating.Game) (gorating.PlayerRating, error) {
+func (t *SimpleRatingSystem) Rate(gorating.PlayerRating, []gorating.Game) (gorating.PlayerRating, error) {
 	return nil, nil
 }
 
