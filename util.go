@@ -14,3 +14,14 @@ func PlayerMap(games []Game) map[string][]Game {
 	}
 	return m
 }
+
+func FilterGames(player Player, games []Game) []Game {
+	m := make([]Game, 0, 5)
+	for _, g := range games {
+		if g.PlayerOne().UnqiueId() == player.UnqiueId() ||
+			g.PlayerTwo().UnqiueId() == player.UnqiueId() {
+			m = append(m, g)
+		}
+	}
+	return m
+}

@@ -63,7 +63,7 @@ type RatingSystem interface {
 	// Rate all the players who played in a tournament.
 	//
 	// Note that rating a single game (instant rating) is a special case.
-	AllPlayers([]Game) []PlayerRating
+	RateAll([]Game) ([]PlayerRating, error)
 
 	// Rate only a single player who played in a tournament.
 	//
@@ -71,5 +71,5 @@ type RatingSystem interface {
 	// game.
 	//
 	// Returns nil if the player is not specified in the relevant games.
-	Player(Player, []Game) PlayerRating
+	Rate(Player, []Game) (PlayerRating, error)
 }

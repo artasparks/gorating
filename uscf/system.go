@@ -26,19 +26,19 @@ type UscfSystem struct {
 	pmap map[string][]gr.Game
 }
 
-func (t *UscfSystem) AllPlayersForEvent(games []gr.Game) []*gr.CalcRating {
+func (t *UscfSystem) RateAll(games []gr.Game) ([]gr.PlayerRating, error) {
 	t.pmap = gr.PlayerMap(games)
-	return nil
+	return nil, nil
 }
 
-func (t *UscfSystem) PlayerForEvent(player gr.Player, games []gr.Game) []*gr.CalcRating {
+func (t *UscfSystem) Rate(player gr.Player, games []gr.Game) (gr.PlayerRating, error) {
 	t.pmap = gr.PlayerMap(games)
 
 	_, ok := t.pmap[player.UnqiueId()]
 	if !ok {
-		return []*gr.CalcRating{}
+		return nil, nil
 	}
-	return nil
+	return nil, nil
 }
 
 var _ gr.RatingSystem = &UscfSystem{}

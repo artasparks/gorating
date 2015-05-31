@@ -1,6 +1,7 @@
 //
 // A simple rating implementation
 //
+// TODO(kashomon): Consider moving up a directory.
 package simple
 
 import "github.com/Kashomon/gorating"
@@ -26,7 +27,7 @@ func (t *Player) NumericScore() float64 {
 }
 
 // Ensure that the Simple player satisfies the Player interface
-var _ gorating.Player = &Player{}
+var _ gorating.PlayerRating = &Player{}
 
 type Game struct {
 	p1     *Player
@@ -34,12 +35,12 @@ type Game struct {
 	result float64
 }
 
-func (t *Game) PlayerOne() gorating.Player {
-	return gorating.Player(t.p1)
+func (t *Game) PlayerOne() gorating.PlayerRating {
+	return gorating.PlayerRating(t.p1)
 }
 
-func (t *Game) PlayerTwo() gorating.Player {
-	return gorating.Player(t.p2)
+func (t *Game) PlayerTwo() gorating.PlayerRating {
+	return gorating.PlayerRating(t.p2)
 }
 
 func (t *Game) GameResult() float64 {
@@ -51,12 +52,12 @@ var _ gorating.Game = &Game{}
 type SimpleRatingSystem struct {
 }
 
-func (t *SimpleRatingSystem) AllPlayersForEvent([]gorating.Game) []*gorating.CalcRating {
-	return []*gorating.CalcRating{}
+func (t *SimpleRatingSystem) RateAll([]gorating.Game) ([]gorating.PlayerRating, error) {
+	return nil, nil
 }
 
-func (t *SimpleRatingSystem) PlayerForEvent(gorating.Player, []gorating.Game) *gorating.CalcRating {
-	return &gorating.CalcRating{}
+func (t *SimpleRatingSystem) Rate(gorating.Player, []gorating.Game) (gorating.PlayerRating, error) {
+	return nil, nil
 }
 
 var _ gorating.RatingSystem = &SimpleRatingSystem{}

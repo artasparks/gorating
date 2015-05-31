@@ -4,6 +4,12 @@ A rating system implemented in the language Go. The goal explicit is to provide
 libraries for ratings generally for the Go language, but the implicity goal is
 to use these ratings systems for the game Go (aka Baduk or Weiqi).
 
+## Implementations
+
+* Glicko was copied from previous work that I had don
+  (github.com/Kashomon/goglicko)
+* USCF is the USCF ELO implementation. See [Mark Glickman's writeup](http://www.glicko.net/ratings/rating.system.pdf)
+
 ## Resources
 
 The best resources are undoubtedly the Kaggle competitions on the subject:
@@ -18,5 +24,3 @@ The best resources are undoubtedly the Kaggle competitions on the subject:
 Another interesting approach: determining ratings based on one game! An
 interesting idea. Maybe only possible for games like chess where the 
 comupters are far better than humans.
-
-* [Finding ELO](https://www.kaggle.com/c/finding-elo)
