@@ -27,7 +27,7 @@ type Player struct {
 }
 
 // Get the UnqiueId, to make this a CompareablePlayer.
-func (t *Player) UnqiueId() string {
+func (t *Player) UniqueId() string {
 	return t.id
 }
 

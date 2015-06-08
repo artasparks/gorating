@@ -6,14 +6,14 @@ func PlayerMaps(games []Game) (map[string][]Game, map[string]PlayerRating) {
 	pr := make(map[string]PlayerRating)
 	for _, g := range games {
 		for _, p := range []PlayerRating{g.PlayerOne(), g.PlayerTwo()} {
-			if _, ok := m[p.UnqiueId()]; !ok {
-				m[p.UnqiueId()] = make([]Game, 0, 5)
+			if _, ok := m[p.UniqueId()]; !ok {
+				m[p.UniqueId()] = make([]Game, 0, 5)
 			}
-			if _, ok := pr[p.UnqiueId()]; !ok {
-				pr[p.UnqiueId()] = p
+			if _, ok := pr[p.UniqueId()]; !ok {
+				pr[p.UniqueId()] = p
 			}
-			arr := m[p.UnqiueId()]
-			m[p.UnqiueId()] = append(arr, g)
+			arr := m[p.UniqueId()]
+			m[p.UniqueId()] = append(arr, g)
 		}
 	}
 	return m, pr
@@ -22,8 +22,8 @@ func PlayerMaps(games []Game) (map[string][]Game, map[string]PlayerRating) {
 func FilterGames(player Player, games []Game) []Game {
 	m := make([]Game, 0, 5)
 	for _, g := range games {
-		if g.PlayerOne().UnqiueId() == player.UnqiueId() ||
-			g.PlayerTwo().UnqiueId() == player.UnqiueId() {
+		if g.PlayerOne().UniqueId() == player.UniqueId() ||
+			g.PlayerTwo().UniqueId() == player.UniqueId() {
 			m = append(m, g)
 		}
 	}

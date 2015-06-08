@@ -5,7 +5,7 @@ package gorating
 // A player.  All that we care about is that the player has a unique ID.
 type Player interface {
 	// Gets the player's un
-	UnqiueId() string
+	UniqueId() string
 }
 
 // Ratable interface.

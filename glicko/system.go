@@ -19,7 +19,7 @@ func (t *CalcRating) Rating() gr.Ratable {
 	return gr.Ratable(t.R)
 }
 
-func (t *CalcRating) UnqiueId() string {
+func (t *CalcRating) UniqueId() string {
 	return t.Id
 }
 
@@ -49,24 +49,24 @@ func (t *System) RateAll(games []gr.Game) ([]gr.PlayerRating, error) {
 func (t *System) Rate(player gr.PlayerRating, games []gr.Game) (gr.PlayerRating, error) {
 	var filtered []gr.Game
 	if t.rmap != nil {
-		filtered = t.rmap[player.UnqiueId()]
+		filtered = t.rmap[player.UniqueId()]
 	} else {
 		filtered = gr.FilterGames(player, games)
 	}
 	if len(filtered) == 0 {
-		return nil, fmt.Errorf("No games found for player with Id: %s.", player.UnqiueId())
+		return nil, fmt.Errorf("No games found for player with Id: %s.", player.UniqueId())
 	}
 	pRate, ok := player.Rating().(*Rating)
 	if !ok {
-		return nil, fmt.Errorf("Rating %s not a glicko rating for player: %s.", player.Rating(), player.UnqiueId())
+		return nil, fmt.Errorf("Rating %s not a glicko rating for player: %s.", player.Rating(), player.UniqueId())
 	}
 	otherRates := make([]*Rating, 0, len(games))
 	results := make([]Result, 0, len(games))
 	for _, g := range filtered {
 		var r gr.Ratable
-		if p1 := g.PlayerOne(); p1.UnqiueId() != player.UnqiueId() {
+		if p1 := g.PlayerOne(); p1.UniqueId() != player.UniqueId() {
 			r = p1.Rating()
-		} else if p2 := g.PlayerTwo(); p2.UnqiueId() != player.UnqiueId() {
+		} else if p2 := g.PlayerTwo(); p2.UniqueId() != player.UniqueId() {
 			r = p2.Rating()
 		} else {
 			panic(fmt.Sprintf("Impossible Game: Player one played twice: %v", g))
@@ -84,7 +84,7 @@ func (t *System) Rate(player gr.PlayerRating, games []gr.Game) (gr.PlayerRating,
 	} else {
 		return &CalcRating{
 			newRating,
-			player.UnqiueId(),
+			player.UniqueId(),
 		}, nil
 	}
 }
